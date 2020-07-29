@@ -1,23 +1,29 @@
-import path from "path";
-import ISenMailForgotPasswordDTO from "./dtos/ISenMailForgotPasswordDTO";
-import MailerConfigSingleton from "@shared/container/providers/MailsProvider/singleton/MailerConfigSingleton";
+import { container } from 'tsyringe';
+import path from 'path';
+import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
+import ISenMailForgotPasswordDTO from './dtos/ISenMailForgotPasswordDTO';
 
 export default async function SendMailForgotPassword({
   to,
+  from,
   data,
 }: ISenMailForgotPasswordDTO) {
+  const mailProvider = container.resolve<IMailProvider>('MailProvider');
   const template = path.resolve(
     __dirname,
-    "views",
-    "ForgotPassword.hbs"
+    '..',
+    '..',
+    '..',
+    'views',
+    'ForgotPassword.hbs',
   );
-  if(MailerConfigSingleton.getIsActive())
-    await MailerConfigSingleton.sendMail({
-      to,
-      subject: "Recuperação de Senha",
-      templateData: {
-        file: template,
-        variables: data,
-      }
-    });
+  await mailProvider.sendMail({
+    subject: 'Recuperação de Senha',
+    templateData: {
+      file: template,
+      variables: data,
+    },
+    to,
+    from,
+  });
 }

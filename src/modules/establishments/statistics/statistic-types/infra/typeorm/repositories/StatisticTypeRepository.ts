@@ -10,6 +10,10 @@ class StatisticTypesRepository implements IStatisticTypesRepository {
     this.ormRepository = getRepository(StatisticType);
   }
 
+  public async delete(id: string): Promise<void> {
+    await this.ormRepository.delete(id);
+  }
+
   public async create(data: ICreateStatisticTypeDTO): Promise<StatisticType> {
     const statisticType = this.ormRepository.create(data);
 

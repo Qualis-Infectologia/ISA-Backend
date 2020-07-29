@@ -1,51 +1,68 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import EstablishmentUsersController from "../controllers/EstablishmentUsersController";
-import ensureEstablishment from "@shared/infra/http/middlewares/ensureEstablishment";
-import EstablishmentGraphicsController from "../controllers/EstablishmentGraphicsController";
+import ensureEstablishment from '@shared/infra/http/middlewares/ensureEstablishment';
+import EstablishmentGraphicsController from '../controllers/EstablishmentGraphicsController';
 
 const establishmentsGraphicsRouter = Router();
 
 establishmentsGraphicsRouter.get(
-  "/users/:date",
+  '/approved-not-approved/:startDate/:endDate',
   ensureEstablishment,
-  EstablishmentUsersController.index
+  EstablishmentGraphicsController.approvedNotApproved,
 );
 
 establishmentsGraphicsRouter.get(
-  "/approved-not-approved/:startDate/:endDate",
+  '/accession/:startDate/:endDate',
   ensureEstablishment,
-  EstablishmentGraphicsController.approvedNotApproved
+  EstablishmentGraphicsController.accession,
 );
 
 establishmentsGraphicsRouter.get(
-  "/accession/:startDate/:endDate",
+  '/symptoms',
   ensureEstablishment,
-  EstablishmentGraphicsController.accession
+  EstablishmentGraphicsController.symptoms,
 );
 
 establishmentsGraphicsRouter.get(
-  "/symptoms",
+  '/users-symptomatic',
   ensureEstablishment,
-  EstablishmentGraphicsController.symptoms
+  EstablishmentGraphicsController.usersSymptomatic,
 );
 
 establishmentsGraphicsRouter.get(
-  "/total-approved-not-approved/:startDate/:endDate",
+  '/users-accession',
   ensureEstablishment,
-  EstablishmentGraphicsController.approvedNotApprovedTotal
+  EstablishmentGraphicsController.usersAccession,
 );
 
 establishmentsGraphicsRouter.get(
-  "/total-accession/:startDate/:endDate",
+  '/users-approved',
   ensureEstablishment,
-  EstablishmentGraphicsController.accessionTotal
+  EstablishmentGraphicsController.usersApproved,
 );
 
 establishmentsGraphicsRouter.get(
-  "/total-symptoms",
+  '/users-not-approved',
   ensureEstablishment,
-  EstablishmentGraphicsController.symptomsTotal
+  EstablishmentGraphicsController.usersNotApproved,
+);
+
+establishmentsGraphicsRouter.get(
+  '/number-users',
+  ensureEstablishment,
+  EstablishmentGraphicsController.usersNumber,
+);
+
+establishmentsGraphicsRouter.get(
+  '/symptom-diaries',
+  ensureEstablishment,
+  EstablishmentGraphicsController.symptomDiaries,
+);
+
+establishmentsGraphicsRouter.get(
+  '/symptomatic-local',
+  ensureEstablishment,
+  EstablishmentGraphicsController.symptomaticLocal,
 );
 
 export default establishmentsGraphicsRouter;

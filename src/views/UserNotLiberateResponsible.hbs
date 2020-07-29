@@ -1,0 +1,120 @@
+<html>
+
+<head>
+  <style>
+    @media screen {
+
+      @font-face {
+        font-family: 'Nunito';
+        font-style: normal;
+        font-weight: normal;
+        font-display: swap;
+        src: local('Nunito Regular'), local('Nunito-Regular'), url(https://fonts.gstatic.com/s/nunito/v12/XRXV3I6Li01BKofINeaBTMnFcQ.woff2) format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Nunito';
+        font-style: normal;
+        font-weight: bold;
+        font-display: swap;
+        src: local('Nunito SemiBold'), local('Nunito-SemiBold'), url(https://fonts.gstatic.com/s/nunito/v12/XRXW3I6Li01BKofA6sKUYevIWzgPDA.woff2) format('woff2');
+      }
+
+    }
+
+    .message-content {
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem;
+      line-height: 1.8rem;
+      color: #383A3D;
+      padding: 5px;
+    }
+
+    .logo {
+      text-align: center;
+      font-weight: bold;
+      font-family: 'Nunito', sans-serif;
+      font-size: 3.5rem;
+      border-bottom: 1px solid #17b8a7;
+      margin-bottom: 5px;
+    }
+
+    .primary {
+      color: #17b8a7;
+    }
+
+    .secondary {
+      font-size: 1.3rem;
+      color: #383A3D;
+      font-weight: normal;
+    }
+
+    strong {
+      font-weight: bold;
+    }
+
+    .not-approved {
+      color: #C54A48;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    a {
+      text-decoration: none;
+      color: #383A3D;
+    }
+
+    footer {
+      margin-top: 5px;
+      text-align: center;
+      border-top: 1px solid #17b8a7;
+      color: #383A3D;
+      padding-top: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <div class="logo">
+      <a href="https://www.roboisa.com.br">
+        <p class="primary">ISA</p>
+        <p class="secondary">Infection Surveillance Assistant</p>
+      </a>
+    </div>
+
+    <div class="message-content">
+      <p>Olá {{name}}, temos um aviso importante!</p>
+      <p>{{attended.name}} passou por uma avaliação com o(a) infectologista {{infecto.name}}</p>
+      <p>O resultado da avaliação foi que {{attended.name}} vai ficar com o acesso negado até {{blocked_until}} ({{days}} dias).</p>
+
+      <p>Informações para contato com {{attended.name}}</p>
+
+      <ul>
+        <li><strong>E-mail:</strong> {{attended.email}}</li>
+        <li><strong>Telefone:</strong> {{attended.phone}}</li>
+      </ul>
+
+      <p>Obrigado! <br /> <strong>Equipe Qualis</strong></p>
+    </div>
+  </div>
+</body>
+<footer>
+  <a href="https://www.portalqualis.com.br">
+    <img src="https://www.portalqualis.com.br/hospital/assets/images/favicon/apple-icon-57x57.png" width="32">
+
+    <p>Qualis</p>
+  </a>
+  <a href="https://goo.gl/maps/kkJdNrnP9pVvGcK38">
+    <p>Av. Osvaldo Aranha, 1022 - Sala 1101</p>
+    <p>Bom Fim, Porto Alegre - RS, 90035-191</p>
+  </a>
+</footer>
+
+</html>

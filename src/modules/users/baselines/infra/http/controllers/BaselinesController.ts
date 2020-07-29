@@ -1,11 +1,11 @@
-import { Response, Request } from "express";
-import { container } from "tsyringe";
+import { Response, Request } from 'express';
+import { container } from 'tsyringe';
 
-import CreateBaselineService from "@users/baselines/services/CreateBaselineService";
-import ShowBaselineService from "@users/baselines/services/ShowBaselineService";
+import CreateBaselineService from '@users/baselines/services/CreateBaselineService';
+import ShowBaselineService from '@users/baselines/services/ShowBaselineService';
 
 class BaselineController {
-  public async create(req: Request, res: Response): Promise<Response> {
+  public async create(request: Request, response: Response): Promise<Response> {
     const {
       age,
       genre,
@@ -17,7 +17,7 @@ class BaselineController {
       contact_covid19,
       mask,
       occupation,
-      occupation_local,
+      locationId,
       hypertension,
       diabetes,
       heart_disease,
@@ -28,10 +28,10 @@ class BaselineController {
       cancer,
       corticosteroids_or_methotrexate,
       gestation,
-    } = req.body;
+    } = request.body;
 
     // @ts-ignore
-    const userId = req.kauth.grant.access_token.content.sub
+    const userId = req.kauth.grant.access_token.content.sub;
 
     const createBaselineService = container.resolve(CreateBaselineService);
 
@@ -47,7 +47,7 @@ class BaselineController {
       contact_covid19,
       mask,
       occupation,
-      occupation_local,
+      locationId,
       hypertension,
       diabetes,
       heart_disease,
@@ -60,7 +60,7 @@ class BaselineController {
       gestation,
     });
 
-    return res.status(201).json(baseline);
+    return response.status(201).json(baseline);
   }
 
   public async show(request: Request, response: Response): Promise<Response> {

@@ -1,5 +1,6 @@
+import { container } from "tsyringe";
 import ISendSmsUserNotApprovedDTO from "./dtos/ISendSmsUserNotApprovedDTO";
-import SmsConfigSingleton from "@shared/container/providers/SmsProvider/singleton/SmsConfigSingleton";
+import ISmsProvider from "@shared/container/providers/SmsProvider/models/ISmsProvider";
 
 export default async function SendMailUserNotApproved({
   name,
@@ -7,12 +8,12 @@ export default async function SendMailUserNotApproved({
   establishment,
   phone,
 }: ISendSmsUserNotApprovedDTO) {
+  const smsProvider = container.resolve<ISmsProvider>("SmsProvider");
 
-  if(SmsConfigSingleton.getIsActive())
-    await SmsConfigSingleton.sendSms({
-      msg: `Olá ${name}, o usuário ${attended} do estabelecimento ${establishment}, apresentou alguns sintomas.`,
-      to: {
-        phone,
-      },
-    });
+  await smsProvider.sendSms({
+    msg: `Olá ${name}, o usuário ${attended} do estabelecimento ${establishment}, apresentou alguns sintomas.`,
+    to: {
+      phone,
+    },
+  });
 }

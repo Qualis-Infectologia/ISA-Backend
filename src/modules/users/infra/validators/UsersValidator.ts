@@ -1,5 +1,5 @@
-import * as Yup from "yup";
-import { Request, Response, NextFunction } from "express";
+import * as Yup from 'yup';
+import { Request, Response, NextFunction } from 'express';
 
 class UsersValidator {
   async create(request: Request, response: Response, next: NextFunction) {
@@ -12,7 +12,7 @@ class UsersValidator {
       phone: Yup.string().required(),
       email: Yup.string().email().required(),
       roleId: Yup.string().required(),
-      establishment: Yup.string().required(),
+      establishments: Yup.array().required(),
     });
 
     await schema.validate(request.body, { abortEarly: false });
@@ -22,11 +22,14 @@ class UsersValidator {
 
   async update(request: Request, response: Response, next: NextFunction) {
     const schema = Yup.object().shape({
+      id: Yup.string().required(),
       username: Yup.string().required(),
       name: Yup.string().required(),
       cpf: Yup.string().required(),
       phone: Yup.string().required(),
       email: Yup.string().email().required(),
+      roleId: Yup.string(),
+      establishments: Yup.array(),
     });
 
     await schema.validate(request.body, { abortEarly: false });

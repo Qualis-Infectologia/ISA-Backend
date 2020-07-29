@@ -19,4 +19,14 @@ export default [{
   name: "Cadastros",
   to: "/cadastros",
   icon: "register",
+},
+{
+  name: "Logs",
+  to: "/logs",
+  icon: "logs",
+},
+{
+  name: "Avaliações",
+  to: '/avaliacoes',
+  icon: "evaluations",
 }] as ICreateResourceDTO[]

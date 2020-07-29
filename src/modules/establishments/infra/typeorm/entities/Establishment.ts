@@ -7,14 +7,15 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
-} from "typeorm";
+} from 'typeorm';
 
-import User from "@users/infra/typeorm/entities/User";
-import Statistic from "@establishments/statistics/infra/typeorm/entities/Statistic";
+import User from '@users/infra/typeorm/entities/User';
+import Statistic from '@establishments/statistics/infra/typeorm/entities/Statistic';
+import Sector from '@establishments/sectors/infra/typeorm/entities/Sector';
 
-@Entity("establishments")
+@Entity('establishments')
 class Establishment {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
@@ -32,7 +33,7 @@ class Establishment {
   @Column()
   city: string;
 
-  @Column("boolean")
+  @Column('boolean')
   active: boolean;
 
   @CreateDateColumn()
@@ -41,12 +42,15 @@ class Establishment {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @ManyToMany((type) => User, (user) => user.establishments)
-  @JoinTable({ name: "users_establishments" })
+  @ManyToMany(type => User, user => user.establishments)
+  @JoinTable({ name: 'users_establishments' })
   users: User[];
 
-  @OneToMany((type) => Statistic, (statistic) => statistic.establishment)
+  @OneToMany(type => Statistic, statistic => statistic.establishment)
   statistics: Statistic[];
+
+  @OneToMany(type => Sector, sector => sector.establishment)
+  sectors: Sector[];
 }
 
 export default Establishment;

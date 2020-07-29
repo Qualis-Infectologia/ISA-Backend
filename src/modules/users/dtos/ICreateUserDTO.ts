@@ -1,5 +1,5 @@
-import Role from "@security/roles/infra/typeorm/entities/Role";
-import Establishment from "@establishments/infra/typeorm/entities/Establishment";
+import Role from '@security/roles/infra/typeorm/entities/Role';
+import Establishment from '@establishments/infra/typeorm/entities/Establishment';
 
 export default interface ICreateUserDTO {
   name: string;

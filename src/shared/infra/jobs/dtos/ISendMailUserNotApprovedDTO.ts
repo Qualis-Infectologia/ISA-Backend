@@ -1,4 +1,4 @@
-import User from "@users/infra/typeorm/entities/User";
+import User from '@users/infra/typeorm/entities/User';
 
 interface IContactMail {
   name: string;
@@ -12,7 +12,6 @@ export default interface ISendMailUserNotApprovedDTO {
     name: string;
     attended: User;
     symptoms: string[];
-    establishment: string;
     responsible?: User[];
   };
 }

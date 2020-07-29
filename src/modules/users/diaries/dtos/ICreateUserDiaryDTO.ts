@@ -1,5 +1,3 @@
-import User from "@users/infra/typeorm/entities/User";
-
 export default interface ICreateUserDiaryDTO {
   userId: string;
   smellLoss: boolean;
@@ -9,10 +7,9 @@ export default interface ICreateUserDiaryDTO {
   fever: boolean;
   cough: boolean;
   diarrhea: boolean;
-  delirium: boolean;
   soreThroat: boolean;
   shortnessOfBreath: boolean;
-  abdominalPain: boolean;
-  chestPain: boolean;
+  nasalCongestion: boolean;
+  headache: boolean;
   approved: boolean;
 }

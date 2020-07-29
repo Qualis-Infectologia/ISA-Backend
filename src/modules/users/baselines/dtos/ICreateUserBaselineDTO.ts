@@ -1,6 +1,6 @@
-import GenreEnum from "@users/baselines/enums/GenreEnum";
-import RaceEnum from "@users/baselines/enums/RaceEnum";
-import User from "@users/infra/typeorm/entities/User";
+import GenreEnum from '@users/baselines/enums/GenreEnum';
+import RaceEnum from '@users/baselines/enums/RaceEnum';
+import Location from '@establishments/sectors/locations/infra/typeorm/entities/Location';
 
 export default interface ICreateUserBaselineDTO {
   age: number;
@@ -14,7 +14,7 @@ export default interface ICreateUserBaselineDTO {
   mask: boolean;
   userId: string;
   occupation: string;
-  occupation_local: string;
+  location: Location;
   hypertension: boolean;
   diabetes: boolean;
   heart_disease: boolean;

@@ -11,6 +11,17 @@ class StatisticTypeValidator {
 
     return next();
   }
+
+  async update(request: Request, response: Response, next: NextFunction) {
+    const schema = Yup.object().shape({
+      id: Yup.string().required(),
+      name: Yup.string().required()
+    });
+
+    await schema.validate(request.body, { abortEarly: false });
+
+    return next();
+  }
 }
 
 export default new StatisticTypeValidator();

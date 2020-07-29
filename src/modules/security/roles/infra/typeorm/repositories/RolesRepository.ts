@@ -7,7 +7,7 @@ class RolesRepository implements IRolesRepository {
     private ormRepository: Repository<Role>;
 
     constructor() {
-        this.ormRepository = getRepository(Role);
+      this.ormRepository = getRepository(Role);
     }
 
     public async create(data: ICreateRoleDTO): Promise<Role> {
@@ -18,6 +18,10 @@ class RolesRepository implements IRolesRepository {
         return role;
     }
 
+    public async delete(id: string): Promise<void> {
+      await this.ormRepository.delete(id);
+    }
+
     public async findByName(name: string): Promise<Role | undefined> {
         const role = this.ormRepository.findOne({ where: { name } });
 
@@ -25,7 +29,9 @@ class RolesRepository implements IRolesRepository {
     }
 
     public async findAll(): Promise<Role[]> {
-        const roles = this.ormRepository.find();
+        const roles = this.ormRepository.find({
+          relations: ["resources"]
+        });
 
         return roles;
     }

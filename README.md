@@ -1,38 +1,8 @@
-# Docker
-Antes de iniciar a instalação do projeto, é necessário que você tenha instalado em sua maquina o docker.
-https://www.docker.com/
-
 # Network
 Caso a rede isa-net não exista ela deve ser criada.
 ```
 docker network create isa-net
 ```
-# Dependências
-para instalação do projeto, é necessário que tenha em sua maquina o NodeJs, caso não tenha, execute o comando em um terminal(ubuntu):
-```
-sudo apt install nodejs
-```
-em seguida, instale o pacote npm com o comando:
-```
-sudo apt install npm
-```
-após a instalaçao das dependencias nodeJS, na pasta raiz do projeto ISA-Backend, execute o comando em um terminal:
-```
-npm install
-```
-em seguida execute o comando:
-```
-npm run production
-```
-*obs: caso não tenha instalado em sua maquina o pacote **'yarn'**, execute em seu terminal o comando:
-```
-npm install -g yarn
-```
-em seguida em um terminal na pasta raiz do projeto:
-```
-yarn
-```
-
 # construindo e rodando containers
 A inicialização do projeto pode ser feita de dois modos, utilizando containers prontos e disponibilizados pelo projeto
 ou realizando a sua construção localmente, portanto os dois modos serão apresentados para todos os recursos.
@@ -129,11 +99,11 @@ docker run \
 > estrutura o que causaria erro ao subir o container.
 
 ## Importação REALM
-- Acesse o painel do keycloak (http://localhost:8080/) e utilize o login padrão, caso não tenha sido alterado (admin, admin).
-- Após clique em realm e utilize em seguida criar. Selecione o arquivo isa-qualis-realm e clique em criar.
-- Após va em clients, e clique em isa-frontend,
-- nos campos Root Url, Base URL, Admin URL e Web Origins, coloque a url base do frontend, ex.: http://localhost
-- Valid Redirect URIs, coloque a url base do frontend seguido de um asterísco, ex.: http://localhost/*
+Acesse o painel do keycloak (http://localhost:8080/) e utilize o login padrão, caso não tenha sido alterado (admin, admin).
+Após clique em realm e utilize em seguida criar. Selecione o arquivo isa-qualis-realm e clique em criar.
+Após va em clients, e clique em isa-frontend,
+nos campos Root Url, Base URL, Admin URL e Web Origins, coloque a url base do frontend, ex.: http://localhost
+em Valid Redirect URIs, coloque a url base do frontend seguido de um asterísco, ex.: http://localhost/*
 
 ## CRIAÇÃO DE USUÁRIO ADMINISTRADOR NO REALM
 após a importação do realm, é necessário a criação de um usuário com as permissões de admin, o usuário deve ter os mesmos valores
@@ -178,7 +148,14 @@ Headers: Authorization Bearer <TOKEN>
 
 ## API
 O serviço de api é responsavel pela implementação da regras de negócios e entrega de dados ao frontend.
-execute o comando:
+
+### Construção local da imagem
+execute no terminal o comando:
+```
+npm run production
+```
+
+após execute o comando:
 ```
 docker build --target isa-api -t isa-api .
 ```

@@ -1,4 +1,4 @@
-import User from "@users/infra/typeorm/entities/User";
+import User from '@users/infra/typeorm/entities/User';
 
 interface IContactMail {
   name: string;
@@ -11,5 +11,6 @@ export default interface ISenMailForgotPasswordDTO {
   data: {
     name: string;
     url: string;
+    username: string;
   };
 }

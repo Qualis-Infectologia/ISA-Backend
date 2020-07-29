@@ -13,6 +13,7 @@ class ShowEstablishmentService {
 
   public async execute(id: string): Promise<Establishment> {
     const establishment = await this.establishmentsRepository.findById(id);
+
     if (!establishment) {
       throw new AppError("Estabelecimento não encontrado", 404);
     }

@@ -1,56 +1,57 @@
-import {container} from "tsyringe";
-import IEstablishmentsRepository from "@establishments/repositories/IEstablishmentsRepository";
-import {subDays} from "date-fns";
-import IDiariesRepository from "@users/diaries/repositories/IDiariesRepository";
-import IStatisticsRepository from "@establishments/statistics/repositories/IStatisticsRepository";
-import IStatisticTypesRepository
-  from "@establishments/statistics/statistic-types/repositories/IStatisticTypesRepository";
-import AppError from "@shared/errors/AppError";
-import KeycloakAdmin from "@shared/keycloak/keycloak-admin";
+import { container } from 'tsyringe';
+import IEstablishmentsRepository from '@establishments/repositories/IEstablishmentsRepository';
+import { subDays } from 'date-fns';
+import IDiariesRepository from '@users/diaries/repositories/IDiariesRepository';
+import IStatisticsRepository from '@establishments/statistics/repositories/IStatisticsRepository';
+import IStatisticTypesRepository from '@establishments/statistics/statistic-types/repositories/IStatisticTypesRepository';
+import AppError from '@shared/errors/AppError';
 
 export default async function UsersAccession() {
   const date = subDays(new Date(), 1);
   const establishmentRepository = container.resolve<IEstablishmentsRepository>(
-    "EstablishmentsRepository"
+    'EstablishmentsRepository',
   );
   const diariesRepository = container.resolve<IDiariesRepository>(
-    "DiariesRepository"
+    'DiariesRepository',
   );
   const statisticsRepository = container.resolve<IStatisticsRepository>(
-    "StatisticsRepository"
+    'StatisticsRepository',
   );
   const statisticTypesRepository = container.resolve<IStatisticTypesRepository>(
-    "StatisticTypesRepository"
+    'StatisticTypesRepository',
   );
   const establishments = await establishmentRepository.findAllWithUsers();
-  const typeAccession = await statisticTypesRepository.findByName("Adesão");
+  const typeAccession = await statisticTypesRepository.findByName('Adesão');
 
   const typeAllAccession = await statisticTypesRepository.findByName(
-    "Adesão total"
+    'Total Adesão',
   );
 
   const typeAllAccessionUsers = await statisticTypesRepository.findByName(
-    "Usuários adesão total"
+    'Total Usuários Adesão',
   );
 
   const typeAccessionUsers = await statisticTypesRepository.findByName(
-    "Usuários adesão"
+    'Usuários Adesão',
   );
 
-  if (!typeAccession) {
-    throw new AppError("Tipo de Estatística Adesão não encontrada", 404);
-  }
+  const typeAllSymptomaticUsers = await statisticTypesRepository.findByName(
+    'Total Sintomáticos',
+  );
 
-  if (!typeAllAccession) {
-    throw new AppError("Tipo de Estatística Adesão Total não encontrada", 404);
-  }
+  const typeSymptomaticUsers = await statisticTypesRepository.findByName(
+    'Sintomáticos',
+  );
 
-  if (!typeAllAccessionUsers) {
-    throw new AppError("Tipo de Estatística Usuários Adesão Total não encontrada", 404);
-  }
-
-  if (!typeAccessionUsers) {
-    throw new AppError("Tipo de Estatística Usuários Adesão não encontrada", 404);
+  if (
+    !typeAccession ||
+    !typeAccessionUsers ||
+    !typeAllAccessionUsers ||
+    !typeAllAccession ||
+    !typeAllSymptomaticUsers ||
+    !typeSymptomaticUsers
+  ) {
+    throw new AppError('Tipo de Estatística não encontrada', 404);
   }
 
   let accession = 0;
@@ -59,54 +60,78 @@ export default async function UsersAccession() {
   let totalAccession = 0;
   let totalAccessionUsers = 0;
   let allUsers = 0;
+  let symptomatic = 0;
+  let allSymptomatic = 0;
 
-  const establishment = establishments[0];
-  establishment.users = await KeycloakAdmin.usersListComplete();
+  const qualis = await establishmentRepository.findByName('Qualis');
 
-  accession = 0;
-  accessionUsers = 0;
-  totalUsers = establishment.users.length;
+  if (!qualis) {
+    throw new AppError('Qualis não encontrada', 404);
+  }
 
-  for (const user of establishment.users) {
-    const diary = await diariesRepository.findByRangeDateByUser(
-      date,
-      user.id
-    );
-    if (diary) {
-      accessionUsers++;
+  for (const establishment of establishments) {
+    accession = 0;
+    accessionUsers = 0;
+    symptomatic = 0;
+    totalUsers = establishment.users.length;
+
+    for (const user of establishment.users) {
+      const diary = await diariesRepository.findByRangeDateByUser(
+        date,
+        user.id,
+      );
+      if (diary) {
+        accessionUsers++;
+        if (!diary.approved) {
+          symptomatic++;
+        }
+      }
     }
+
+    totalAccessionUsers += accessionUsers;
+    allUsers += totalUsers;
+    allSymptomatic += symptomatic;
+
+    if (totalUsers > 0) {
+      accession = (accessionUsers / totalUsers) * 100;
+    }
+
+    await statisticsRepository.create({
+      establishment,
+      statisticType: typeAccession,
+      value: accession,
+    });
+
+    await statisticsRepository.create({
+      establishment,
+      statisticType: typeAccessionUsers,
+      value: accessionUsers,
+    });
+
+    await statisticsRepository.create({
+      establishment,
+      statisticType: typeSymptomaticUsers,
+      value: symptomatic,
+    });
   }
-
-  totalAccessionUsers += accessionUsers;
-  allUsers += totalUsers;
-
-  if (totalUsers > 0) {
-    accession = (accessionUsers / totalUsers) * 100;
-  }
-
-  await statisticsRepository.create({
-    establishment,
-    statisticType: typeAccession,
-    value: accession,
-  });
-
-  await statisticsRepository.create({
-    establishment,
-    statisticType: typeAccessionUsers,
-    value: accessionUsers,
-  });
 
   totalAccession = (totalAccessionUsers / allUsers) * 100;
 
   await statisticsRepository.create({
-    establishment: establishment,
+    establishment: qualis,
     statisticType: typeAllAccession,
     value: totalAccession,
   });
 
   await statisticsRepository.create({
-    establishment: establishment,
+    establishment: qualis,
     statisticType: typeAllAccessionUsers,
     value: totalAccessionUsers,
+  });
+
+  await statisticsRepository.create({
+    establishment: qualis,
+    statisticType: typeAllSymptomaticUsers,
+    value: allSymptomatic,
   });
 }

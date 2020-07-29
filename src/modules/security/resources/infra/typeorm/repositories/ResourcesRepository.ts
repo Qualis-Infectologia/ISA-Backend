@@ -18,6 +18,10 @@ class ResourcesRepository implements IResourcesRepository {
     return resource;
   }
 
+  public async delete(id: string): Promise<void> {
+    await this.ormRepository.delete(id);
+  }
+
   public async findByName(name: string): Promise<Resource | undefined> {
     const resource = this.ormRepository.findOne({ where: { name } });
 
@@ -39,7 +43,6 @@ class ResourcesRepository implements IResourcesRepository {
   public async findById(id: string): Promise<Resource | undefined> {
     const resource = this.ormRepository.findOne({
       where: { id },
-      relations: ["module"],
     });
 
     return resource;

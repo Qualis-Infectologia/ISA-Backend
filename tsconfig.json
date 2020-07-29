@@ -2,48 +2,25 @@
   "compilerOptions": {
     "target": "ES2017",
     "module": "commonjs",
-    "lib": [
-      "ES6"
-    ],
+    "lib": ["ES6"],
     "allowJs": true,
     "sourceMap": true,
-    "outDir": "./dist",
-    "rootDir": "./src/",
+    "outDir": "./build",
+    "rootDir": "./src",
     "strict": true,
     "baseUrl": "./src",
     "removeComments": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./src/@types"
-    ],
+    "typeRoots": ["./node_modules/@types", "./src/@types"],
     "paths": {
-      "@establishments/*": [
-        "modules/establishments/*"
-      ],
-      "@users/*": [
-        "modules/users/*"
-      ],
-      "@security/*": [
-        "modules/security/*"
-      ],
-      "@modules/*": [
-        "modules/*"
-      ],
-      "@config/*": [
-        "config/*"
-      ],
-      "@shared/*": [
-        "shared/*"
-      ],
-      "@docs/*": [
-        "docs/*"
-      ],
-      "@errors/*": [
-        "shared/errors/*"
-      ],
-      "@routes/*": [
-        "shared/infra/http/routes/*"
-      ]
+      "@establishments/*": ["modules/establishments/*"],
+      "@users/*": ["modules/users/*"],
+      "@security/*": ["modules/security/*"],
+      "@modules/*": ["modules/*"],
+      "@config/*": ["config/*"],
+      "@shared/*": ["shared/*"],
+      "@docs/*": ["docs/*"],
+      "@errors/*": ["shared/errors/*"],
+      "@routes/*": ["shared/infra/http/routes/*"]
     },
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -53,7 +30,5 @@
     "resolveJsonModule": true,
     "strictPropertyInitialization": false
   },
-  "include": [
-    "./src/"
-  ]
+  "include": ["./src"]
 }

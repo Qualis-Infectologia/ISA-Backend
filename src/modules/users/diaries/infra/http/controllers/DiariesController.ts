@@ -1,8 +1,8 @@
-import { Response, Request } from "express";
-import { container } from "tsyringe";
-import CreateDiaryService from "@users/diaries/services/CreateDiaryService";
-import ShowDiaryService from "@users/diaries/services/ShowDiaryService";
-import ShowDiaryByDateByUserService from "@users/diaries/services/ShowDiaryByDateByUserService";
+import { Response, Request } from 'express';
+import { container } from 'tsyringe';
+import CreateDiaryService from '@users/diaries/services/CreateDiaryService';
+import ShowDiaryService from '@users/diaries/services/ShowDiaryService';
+import ShowDiaryByDateByUserService from '@users/diaries/services/ShowDiaryByDateByUserService';
 import ListEstablishmentsService from '@establishments/services/ListEstablishmentsService';
 
 class DiariesController {
@@ -18,15 +18,15 @@ class DiariesController {
       delirium,
       soreThroat,
       shortnessOfBreath,
-      abdominalPain,
-      chestPain,
+      nasalCongestion,
+      headache,
     } = request.body;
     // @ts-ignore
     const userId = request.user.id;
-    // @ts-ignore
+
     const establishmentService = container.resolve(ListEstablishmentsService);
 
-    const establishment = await establishmentService.execute()
+    const establishment = await establishmentService.execute();
 
     const createDiaryService = container.resolve(CreateDiaryService);
 
@@ -42,11 +42,11 @@ class DiariesController {
         delirium,
         soreThroat,
         shortnessOfBreath,
-        abdominalPain,
-        chestPain,
+        headache,
+        nasalCongestion,
       },
       userId,
-      establishment[0]
+      establishment[0],
     );
 
     return response.status(201).json(diary);
@@ -64,14 +64,15 @@ class DiariesController {
 
   public async showByDate(
     request: Request,
-    response: Response
+    response: Response,
   ): Promise<Response> {
     const { date } = request.params;
 
     // @ts-ignore
-    const  id  = request.user.id;
+    const { id } = request.user;
+
     const showDiaryByDateByUserService = container.resolve(
-      ShowDiaryByDateByUserService
+      ShowDiaryByDateByUserService,
     );
 
     const diary = await showDiaryByDateByUserService.execute(date, id);

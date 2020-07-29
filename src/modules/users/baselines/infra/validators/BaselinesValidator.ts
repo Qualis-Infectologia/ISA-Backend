@@ -1,20 +1,20 @@
-import * as Yup from "yup";
-import { Request, Response, NextFunction } from "express";
+import * as Yup from 'yup';
+import { Request, Response, NextFunction } from 'express';
 
 class BaselinesValidator {
-  async create(request: Request, response: Response, next: NextFunction){
+  async create(request: Request, response: Response, next: NextFunction) {
     const schema = Yup.object().shape({
       age: Yup.number().integer().required(),
       weight: Yup.number().required(),
       height: Yup.number().required(),
-      genre: Yup.mixed().oneOf(["M", "F"]).required(),
-      race: Yup.mixed().oneOf(["B", "M", "W"]).required(),
+      genre: Yup.mixed().oneOf(['M', 'F']).required(),
+      race: Yup.mixed().oneOf(['B', 'M', 'W']).required(),
       city: Yup.string().required(),
       recent_appointments: Yup.boolean().required(),
       contact_covid19: Yup.boolean().required(),
       mask: Yup.boolean().required(),
       occupation: Yup.string().required(),
-      occupation_local: Yup.string().required(),
+      locationId: Yup.string().required(),
       hypertension: Yup.boolean().required(),
       diabetes: Yup.boolean().required(),
       heart_disease: Yup.boolean().required(),

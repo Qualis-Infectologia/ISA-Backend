@@ -68,11 +68,6 @@ UNDER CONSTRUCTION
 docker run \
        --network isa-net \
        -d -p 5432:5432 \
-       -e ESTABLISHMENT_NAME=<nome do estabelecimento> \
-       -e ESTABLISHMENT_EMAIL=<email do estabelecimento> \
-       -e ESTABLISHMENT_CNPJ=<CNPJ do estabelecimento> \
-       -e ESTABLISHMENT_PHONE=<Telefone do estabelecimento> \
-       -e ESTABLISHMENT_CITY=<cidade do estabelecimento> \
         --name postgres \
           postgres
 ```

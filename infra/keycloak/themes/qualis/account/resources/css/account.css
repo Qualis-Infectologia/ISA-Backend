@@ -10,6 +10,7 @@ body {
 }
 
 header .navbar {
+    background: url('../img/keycloak-bg.png') no-repeat center center fixed;
     margin-bottom: 0;
     min-height: inherit;
 }
@@ -29,15 +30,16 @@ header .navbar {
 
 .navbar-pf .navbar-utility {
 	right: 20px;
-    top: -34px;
-    font-size: 12px;
+  top: -34px;
+  font-size: 13px;
 }
 
 .navbar-pf .navbar-utility > li > a {
-    color: #fff !important;
+    color: #FFFFFF !important;
     padding-bottom: 12px;
     padding-top: 11px;
     border-left: medium none;
+    font-weight: bold;
 }
 
 .container {
@@ -74,6 +76,9 @@ header .navbar {
 .bs-sidebar ul li {
     margin-bottom: 0.5em;
     margin-left: -1em;
+}
+.bs-sidebar ul li:nth-child(3), .bs-sidebar ul li:nth-child(4), .bs-sidebar ul li:nth-child(5){
+    display: none;
 }
 .bs-sidebar ul li a {
     font-size: 14px;

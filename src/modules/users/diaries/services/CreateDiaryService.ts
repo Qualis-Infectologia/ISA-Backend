@@ -106,7 +106,7 @@ class CreateDiaryService {
             name: responsible.name,
             attended: user,
             symptoms,
-            establishment: establishment.name,
+            establishment: establishment.name
           },
         });
         if (process.env.NODE_ENV === "production") {

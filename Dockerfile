@@ -50,7 +50,7 @@ ENV MEMORY 1024
 ENV API_PORT 8080
 CMD node --max-old-space-size=$MEMORY --optimize-for-size --inspect shared/infra/http/server.js
 
-FROM jboss/keycloak AS keycloak
+FROM quay.io/keycloak/keycloak:15.0.2 AS keycloak
 ENV JAVA_OPTS="-Dkeycloak.profile.feature.upload_scripts=enabled"
 ENV DB_VENDOR=postgres
 ENV DB_ADDR=postgres
